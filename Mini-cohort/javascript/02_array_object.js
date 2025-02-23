@@ -1,20 +1,34 @@
+let chaiTypes = ["masala chai" ," ginger chai", "green tea", "Leamo Tea" ]
+
+console.log(chaiTypes[2]);
+console.log(chaiTypes.length);
+
+chaiTypes.push("Herbal Tea") // add at the end 
+
+chaiTypes.pop() // remove the last element
+//last element name will get the output
+
+let index = chaiTypes.indexOf("green tea")
+
+//interview q
+if(index != -1){
+    chaiTypes.splice(index,1)
+}
 
 
+chaiTypes.forEach((chai,index,array)=>{
+        console.log(`${index+1} : ${chai}`);
+        
+})
+
+let moreChai = ["Oolong tea "]
+
+let allChaiType= chaiTypes.concat(moreChai)
+
+let newChaiType = [...chaiTypes,"Chamoalio tea"]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//object literals
 
 
 //Object
