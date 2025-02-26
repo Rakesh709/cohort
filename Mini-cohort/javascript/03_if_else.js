@@ -48,20 +48,40 @@ let finalBill = calculateTotal(1200)
 
 */
 
+// function trafficLight(color){
+//     switch(color){
+//         case "red":
+//           return "Stop"
+//         case "yellow":
+//            return "wait"
+//         case "green":
+//             return "go"
+//         default:
+//             return "challan"        
+//     }
+// }
+//retuurn nhi likh ahai break likhna hai
+
+
 function trafficLight(color){
     switch(color){
         case "red":
-          return "Stop"
+          console.log("Stop");
+          break;
         case "yellow":
-           return "wait"
+            console.log("Slow down");
+            break;
         case "green":
-            return "go"
+            console.log("go");
+            break;
         default:
-            return "challan"        
+            console.log("Chalam kaat do");
+                 
     }
 }
 
-//console.log(trafficLight("purple"));
+
+console.log(trafficLight("red"));
 
 
 function checktruthyValue(value){
@@ -87,7 +107,7 @@ checktruthyValue([1,2,3]) //Truthy
 
 // let isloading = false
 
-// return isloading ?() : ()
+// return isloading ? (<>loading wala circle</>) : (<>{data}</>)
 
 function login(username, password){
    if(username ==="admin" && password ==="1234"){
