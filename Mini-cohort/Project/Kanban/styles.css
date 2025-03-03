@@ -7,19 +7,23 @@
 
 
 body{
-    color: black;
+    color: rgb(255, 255, 255);
+    background-color: black;
 
 }
 .container{
     display: flex;
     gap: 20px;
     padding: 20px;
-}
+    
 
 .board{
     border: 1px solid;
     height: 80vh;
     width: 200px;
+    border-radius: 10px;
+    text-align: center;
+}
 }
 
 .items{
@@ -29,7 +33,7 @@ body{
 .item{
     border: 1px solid;
     padding: 15px 8px;
-    margin-top: 10px;
+    margin: 10px 10px;
     border-radius: 10px;
     cursor: pointer;
 }
