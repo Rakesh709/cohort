@@ -1,7 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
-
+import db from "./utils/db.js";
 
 dotenv.config();
 //if diffrent folder path mentioned in config
@@ -12,7 +12,7 @@ const app = express()
 const port = process.env.PORT ||  8080;
 
 app.use(cors({
-  origin:"http://localhost:8080",
+  origin:process.env.BASE_URL,
   methods:["GET","POST","PUT","OPTIONS","DELETE"],
   allowedHeaders:["Content-Type","Authorization"],
   credentials:true
@@ -38,7 +38,8 @@ app.get("/rakesh",(req,res)=>{
   
 })
 
-
+//connect to db
+db();
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
