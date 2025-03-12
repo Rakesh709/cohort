@@ -100,10 +100,61 @@ const registerUser = async (req, res) => {
   }
 };
 
+//to verify user
+const verifyUser = async (req,res)=>{
+  //algo
+  //get token from url 
+  //validate token
+  //find user based on token
+  //if not 
+  //set isVerified field true
+  //remove verification token
+  //save 
+  //return ressponse 
+
+
+
+  //get token from url 
+  const {token} = req.params;
+  console.log(token);
+
+  //validate token
+  if(!token){
+    return res.status(400).json({
+      message:"Invalid token"
+    })
+  }
+
+
+   //find user based on token
+  const user = await User.findOne({verificationToken:token})
+
+  if(!user){
+    return res.status(400).json({
+      message:"Invalid token"
+    })
+  }
+
+  //set isVerified field true
+  user.isVerified = true
+
+  //remove verification token
+  user.verificationToken=undefined
+
+  //save 
+  await Db.save()
+
+  
+
+
+}
+
+
+
 const testUser = async (req, res) => {
   res.send("User test");
 };
 
-export { registerUser, testUser };
+export { registerUser, verifyUser ,testUser };
 
 //controller is the functinality
