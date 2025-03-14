@@ -142,7 +142,7 @@ const verifyUser = async (req,res)=>{
   user.verificationToken=undefined
 
   //save 
-  await Db.save()
+  await user.save()
 
   
 

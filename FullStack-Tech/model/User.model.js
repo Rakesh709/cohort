@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
     name:String,
@@ -24,6 +25,18 @@ const userSchema = new mongoose.Schema({
     }
 },{
     timestamps:true
+});
+
+//hookes as middleware
+
+userSchema.pre("save", async function(next){
+
+    if(this.isModified("password")){
+        this.password = bcrypt.hash(this.password,10);
+    }
+
+    //work done now move on
+    next()
 });
 
 
