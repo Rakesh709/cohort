@@ -217,6 +217,43 @@ const login = async (req,res)=>{
 
 
 
+//to get profile
+
+const getMe = async (req,res)=>{
+  try{
+
+  }catch(error){
+
+  }
+}
+
+const logoutUser = async (req,res)=>{
+  try{
+    
+  }catch(error){
+
+  }
+}
+
+
+const resetPassword = async (req,res)=>{
+  try{
+    
+  }catch(error){
+
+  }
+}
+
+const forgotPassword = async (req,res)=>{
+  try{
+    
+  }catch(error){
+
+  }
+}
+
+
+
 const testUser = async (req, res) => {
   res.send("User test");
 };
@@ -224,3 +261,12 @@ const testUser = async (req, res) => {
 export { registerUser, verifyUser ,login,testUser };
 
 //controller is the functinality
+
+//middleware
+
+// A middleware function is a function that takes a request object and either terminates the request/response cycle or passes control to another middleware function.
+
+
+// new Date(0) = January 1, 1970, 00:00:00 UTC
+
+//USP - unique selling proposition (someone asked 😿)
