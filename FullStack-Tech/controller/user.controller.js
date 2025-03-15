@@ -1,6 +1,10 @@
 import User from "../model/User.model.js";
 import crypto from "crypto"
 import nodemailer from "nodemailer"
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+
 
 const registerUser = async (req, res) => {
   //get Data
@@ -144,9 +148,71 @@ const verifyUser = async (req,res)=>{
   //save 
   await user.save()
 
-  
+}
 
 
+const login = async (req,res)=>{
+    const {email,password}= req.body;
+
+    if(!email || !password){
+      return res.status(400).json({
+        message:"All fields are required"
+      })
+    }
+
+    try {
+      const user = await User.findOne({email})
+
+      if(!user){
+        return res.status(400).json({
+          message:"Inavlid email or password",
+        });
+      }
+
+   const isMatch = await bcrypt.compare(password,user.password)
+   //true or false value only
+    console.log(isMatch);
+      
+    if(!isMatch){
+      return res.status(400).json({
+        message:"Inavlid email or password",
+      });
+    }
+
+    //check user.isVeried tue or false
+
+  //jwt token  
+  const token = jwt.sign({id:user._id,role:user.role},"shhhh",{
+      expiresIn:"24h"
+    })
+
+    const cookieOptions ={
+      httpOnly:true,
+      secure:true,
+      maxAge: 24*60*60*1000
+    }
+    //to send cookies
+    res.cookie("token",token,cookieOptions)
+
+    res.status(200).json({
+      success:true,
+      message:'Login successful',
+      token,
+      user:{
+        id:user._id,
+        name:user.name,
+        role:user.role,
+      }
+    })
+
+
+    } catch (error) {
+      res.status(400).json({
+        message:"Login Failed",
+        error,
+        success:false
+    })
+    }
 }
 
 
@@ -155,6 +221,6 @@ const testUser = async (req, res) => {
   res.send("User test");
 };
 
-export { registerUser, verifyUser ,testUser };
+export { registerUser, verifyUser ,login,testUser };
 
 //controller is the functinality

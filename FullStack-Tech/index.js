@@ -2,7 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import db from "./utils/db.js";
-
+import cookieParser from "cookie-parser"
 
 //import all routes
 import userRoutes from "./routes/user.routes.js"
@@ -14,6 +14,7 @@ dotenv.config();
 
 const app = express()
 const port = process.env.PORT ||  8080;
+
 
 app.use(cors({
   origin:process.env.BASE_URL,
@@ -28,6 +29,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 //url encoding %20 like that
 
+app.use(cookieParser());
+//to access cookies
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
