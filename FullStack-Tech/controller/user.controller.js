@@ -200,7 +200,7 @@ const login = async (req, res) => {
 
     //jwt token
     //in sign we send payload mostly id 
-    const token = jwt.sign({ id: user._id, role: user.role }, "shhhh", {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRETE, {
       expiresIn: "24h",
     });
 
@@ -233,34 +233,65 @@ const login = async (req, res) => {
 
 //to get profile
 
-const getMe = async (req, res) => {
-  const {email} = req.body;
+// const getMe = async (req, res) => {
+//   const {email} = req.body;
 
-  if(!email){
-    return res.status(400).json({
-      message: "All fields are required",
-    });
-  }
+//   if(!email){
+//     return res.status(400).json({
+//       message: "All fields are required",
+//     });
+//   }
 
+//   try {
+//     const user = await User.findOne({email});
+
+//     if (!user) {
+//       return res.status(400).json({
+//         message: "Invalid email",
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Successfully get the user Data",
+//       user: {
+//         id: user._id,
+//         name: user.name,
+//         role: user.role,
+//       },
+//     });
+
+
+//   } catch (error) {
+//     res.status(400).json({
+//       message: "Failed to get Data",
+//       error,
+//       success: false,
+//     });
+//   }
+// };
+
+//jab kuch kaam jada baar hota hai to utility bnate hai 
+
+const getMe = async (req,res)=>{
   try {
-    const user = await User.findOne({email});
+    //first authanticate it
+    // const data = req.user
+    // console.log("Reached at profile level",data);
+    
+    const user= await User.findById(req.user.id).select("-password");
 
-    if (!user) {
+    if(!user){
       return res.status(400).json({
-        message: "Invalid email",
+        success:false,
+        message: "User not found",
       });
     }
 
     res.status(200).json({
-      success: true,
-      message: "Successfully get the user Data",
-      user: {
-        id: user._id,
-        name: user.name,
-        role: user.role,
-      },
-    });
-
+      success:true,
+      user
+    })
 
   } catch (error) {
     res.status(400).json({
@@ -269,13 +300,15 @@ const getMe = async (req, res) => {
       success: false,
     });
   }
-};
+}
 
+//userLogin hai ki nhi via token
 const logoutUser = async (req, res) => {
   try {
   } catch (error) {}
 };
 
+//user hai to email sai password reset krna hai to
 const resetPassword = async (req, res) => {
   try {
   } catch (error) {}
