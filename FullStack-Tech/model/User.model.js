@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema({
     timestamps:true
 });
 
-//hookes as middleware
-
+//hookes as middleware from mongooese
+//for the password hash
 userSchema.pre("save", async function(next){
 
     if(this.isModified("password")){
@@ -39,7 +39,7 @@ userSchema.pre("save", async function(next){
     next()
 });
 
-
+//every middleware have flag next 
 
 const User = mongoose.model("User",userSchema)
 

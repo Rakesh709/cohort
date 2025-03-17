@@ -1,10 +1,10 @@
 import User from "../model/User.model.js";
-import crypto from "crypto"
-import nodemailer from "nodemailer"
+import crypto from "crypto";
+import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-
+import dotenv from "dotenv";
+import { log } from "console";
 
 const registerUser = async (req, res) => {
   //get Data
@@ -41,7 +41,6 @@ const registerUser = async (req, res) => {
         message: "User already exists",
       });
     }
-    
 
     const user = await User.create({
       name,
@@ -49,216 +48,249 @@ const registerUser = async (req, res) => {
       password,
     });
     console.log(user);
-    
 
-    if(!user){
-        return res.status(400).json({
-            message: "User not registred",
-          });
+    if (!user) {
+      return res.status(400).json({
+        message: "User not registred",
+      });
     }
 
     //create a verification token
-   const token = crypto.randomBytes(32).toString("hex");
+    const token = crypto.randomBytes(32).toString("hex");
     console.log(token);
-    
+
     //save token in database
-    user.verificationToken=token
+    user.verificationToken = token;
 
     //save into db
-    await user.save()
+    await user.save();
 
     //send token as email to user
     const transporter = nodemailer.createTransport({
-        host: process.env.MAILTRAP_HOST,
-        port: process.env.MAILTRAP_PORT,
-        secure: false, // true for port 465, false for other ports
-        auth: {
-          user: process.env.MAILTRAP_USERNAME,
-          pass: process.env.MAILTRAP_PASSWORD,
-        },
-      });
+      host: process.env.MAILTRAP_HOST,
+      port: process.env.MAILTRAP_PORT,
+      secure: false, // true for port 465, false for other ports
+      auth: {
+        user: process.env.MAILTRAP_USERNAME,
+        pass: process.env.MAILTRAP_PASSWORD,
+      },
+    });
 
     const mailOption = {
-       from:  process.env.MAILTRAP_USERNAME,
-       to: user.email,
-       subject: "Verify your email ✔", // Subject line
-       text: `Please click on the following link:
-        ${process.env.BASE_URL}/api/v1/users/verify/${token} 
-       `
-       //generate the url
-    }
+      from: process.env.MAILTRAP_SENDEREMAIL,
+      to: user.email,
+      subject: "Verify your email", // Subject line
+      text: `Please click on the following link:
+      ${process.env.BASE_URL}/api/v1/users/verify/${token}
+      `,
+    };
 
-    await transporter.sendMail(mailOption)
+    console.log("before mail");
+    await transporter.sendMail(mailOption);
+    console.log("after  mail");
 
     res.status(201).json({
-        message:"User registred successfully",
-        success:true
-    })
-
+      message: "User registred successfully",
+      success: true,
+    });
   } catch (error) {
     res.status(400).json({
-        message:"User not registred",
-        error,
-        success:false
-    })
+      message: "User not registred",
+      error,
+      success: false,
+    });
   }
 };
 
 //to verify user
-const verifyUser = async (req,res)=>{
+const verifyUser = async (req, res) => {
   //algo
-  //get token from url 
+  //get token from url
   //validate token
   //find user based on token
-  //if not 
+  //if not
   //set isVerified field true
   //remove verification token
-  //save 
-  //return ressponse 
+  //save
+  //return ressponse
 
+  try {
+    //get token from url
+    const { token } = req.params;
+    console.log(token);
 
-
-  //get token from url 
-  const {token} = req.params;
-  console.log(token);
-
-  //validate token
-  if(!token){
-    return res.status(400).json({
-      message:"Invalid token"
-    })
-  }
-
-
-   //find user based on token
-  const user = await User.findOne({verificationToken:token})
-
-  if(!user){
-    return res.status(400).json({
-      message:"Invalid token"
-    })
-  }
-
-  //set isVerified field true
-  user.isVerified = true
-
-  //remove verification token
-  user.verificationToken=undefined
-
-  //save 
-  await user.save()
-
-}
-
-
-const login = async (req,res)=>{
-    const {email,password}= req.body;
-
-    if(!email || !password){
+    //validate token
+    if (!token) {
       return res.status(400).json({
-        message:"All fields are required"
-      })
+        message: "Invalid token",
+      });
     }
 
-    try {
-      const user = await User.findOne({email})
+    //find user based on token
+    const user = await User.findOne({ verificationToken: token });
 
-      if(!user){
-        return res.status(400).json({
-          message:"Inavlid email or password",
-        });
-      }
-
-   const isMatch = await bcrypt.compare(password,user.password)
-   //true or false value only
-    console.log(isMatch);
-      
-    if(!isMatch){
+    if (!user) {
       return res.status(400).json({
-        message:"Inavlid email or password",
+        message: "Invalid token",
+      });
+    }
+
+    //set isVerified field true
+    user.isVerified = true;
+
+    //remove verification token
+    user.verificationToken = undefined;
+
+    //save
+    await user.save();
+    console.log("verified done");
+
+    res.status(201).json({
+      message: "verification done ✅",
+      success: true,
+    });
+  } catch (error) {
+    es.status(400).json({
+      message: "Failed to verify",
+      error,
+      success: false,
+    });
+  }
+};
+
+//jab bhi user correct username and password shi de 
+//to session token create kre
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "All fields are required",
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    //password check 
+    const isMatch = await bcrypt.compare(password, user.password);
+    //true or false value only
+    console.log(isMatch);
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Inavlid email or password",
       });
     }
 
     //check user.isVeried tue or false
-
-  //jwt token  
-  const token = jwt.sign({id:user._id,role:user.role},"shhhh",{
-      expiresIn:"24h"
-    })
-
-    const cookieOptions ={
-      httpOnly:true,
-      secure:true,
-      maxAge: 24*60*60*1000
+    if(!user.isVerified){
+      return res.status(400).json({
+        message: "verify yourself",
+      });
     }
+
+
+    //jwt token
+    //in sign we send payload mostly id 
+    const token = jwt.sign({ id: user._id, role: user.role }, "shhhh", {
+      expiresIn: "24h",
+    });
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    };
     //to send cookies
-    res.cookie("token",token,cookieOptions)
+    res.cookie("token", token, cookieOptions);
 
     res.status(200).json({
-      success:true,
-      message:'Login successful',
+      success: true,
+      message: "Login successful",
       token,
-      user:{
-        id:user._id,
-        name:user.name,
-        role:user.role,
-      }
-    })
-
-
-    } catch (error) {
-      res.status(400).json({
-        message:"Login Failed",
-        error,
-        success:false
-    })
-    }
-}
-
-
+      user: {
+        id: user._id,
+        name: user.name,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Login Failed",
+      error,
+      success: false,
+    });
+  }
+};
 
 //to get profile
 
-const getMe = async (req,res)=>{
-  try{
+const getMe = async (req, res) => {
+  const {email} = req.body;
 
-  }catch(error){
-
+  if(!email){
+    return res.status(400).json({
+      message: "All fields are required",
+    });
   }
-}
 
-const logoutUser = async (req,res)=>{
-  try{
-    
-  }catch(error){
+  try {
+    const user = await User.findOne({email});
 
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid email",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully get the user Data",
+      user: {
+        id: user._id,
+        name: user.name,
+        role: user.role,
+      },
+    });
+
+
+  } catch (error) {
+    res.status(400).json({
+      message: "Failed to get Data",
+      error,
+      success: false,
+    });
   }
-}
+};
 
+const logoutUser = async (req, res) => {
+  try {
+  } catch (error) {}
+};
 
-const resetPassword = async (req,res)=>{
-  try{
-    
-  }catch(error){
+const resetPassword = async (req, res) => {
+  try {
+  } catch (error) {}
+};
 
-  }
-}
-
-const forgotPassword = async (req,res)=>{
-  try{
-    
-  }catch(error){
-
-  }
-}
-
-
+const forgotPassword = async (req, res) => {
+  try {
+  } catch (error) {}
+};
 
 const testUser = async (req, res) => {
   res.send("User test");
 };
 
-export { registerUser, verifyUser ,login,testUser };
+export { registerUser, verifyUser, login,getMe ,testUser };
 
 //controller is the functinality
 
@@ -266,7 +298,8 @@ export { registerUser, verifyUser ,login,testUser };
 
 // A middleware function is a function that takes a request object and either terminates the request/response cycle or passes control to another middleware function.
 
-
 // new Date(0) = January 1, 1970, 00:00:00 UTC
 
 //USP - unique selling proposition (someone asked 😿)
+
+//how to create user as a admin ??
