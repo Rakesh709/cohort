@@ -25,7 +25,7 @@ export const isLoggedIn = async (req, res, next)=>{
 
         //token sai data nikal na hai
 
-      const decoded=  jwt.verify(token,process.env.JWT_SECRETE)
+      const decoded= await jwt.verify(token,process.env.JWT_SECRETE)
       console.log("decoded data:", decoded);
     
       req.user= decoded
