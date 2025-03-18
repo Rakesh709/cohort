@@ -3,8 +3,7 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import { log } from "console";
+
 
 const registerUser = async (req, res) => {
   //get Data
@@ -305,17 +304,52 @@ const getMe = async (req,res)=>{
 //userLogin hai ki nhi via token
 const logoutUser = async (req, res) => {
   try {
-  } catch (error) {}
+    res.cookie('token','',{})
+    // expires: new Date(0)
+
+    res.status(200).json({
+      success:true,
+      message:"Logged out successfully"
+    })
+  } catch (error) {
+    res.status(400).json({
+      message: "Failed to logout",
+      error,
+      success: false,
+    });
+  }
 };
 
 //user hai to email sai password reset krna hai to
 const resetPassword = async (req, res) => {
   try {
+    // collect token from params
+    //password from req body
+    
+    const {token } = req.params;
+    const {password} = req.body;
+    try {
+    const user= await User.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires:{$gt:Date.now()}
+      })
+
+      //set password in user
+      //resetToken , resetExpiry ==> reset
+      //save
+    } catch (error) {
+      
+    }
   } catch (error) {}
 };
 
 const forgotPassword = async (req, res) => {
   try {
+    //get email
+    //find user based on email
+    //resert token + reset expiry => date .now()+10*60*1000
+    //user.save()
+    //send email url construction 
   } catch (error) {}
 };
 
@@ -323,7 +357,7 @@ const testUser = async (req, res) => {
   res.send("User test");
 };
 
-export { registerUser, verifyUser, login,getMe ,testUser };
+export { registerUser, verifyUser, login,getMe ,logoutUser,testUser };
 
 //controller is the functinality
 

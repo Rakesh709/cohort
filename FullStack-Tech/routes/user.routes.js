@@ -1,5 +1,5 @@
 import express from "express"
-import { login, registerUser,testUser, getMe,verifyUser } from "../controller/user.controller.js";
+import { login, registerUser,testUser, getMe,verifyUser, logoutUser } from "../controller/user.controller.js";
 import { isLoggedIn } from "../middleware/auth.middleware.js";
 
 
@@ -13,6 +13,7 @@ router.get("/verify/:token", verifyUser)
 router.post("/login",login);
 
 router.get("/me", isLoggedIn, getMe);
+router.get("/logout",isLoggedIn,logoutUser)
 
 router.get("/test",testUser);
 
