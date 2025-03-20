@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="board">
+        <!-- //todo -->
+        <div class="coloum" id="todo">
+            <h2>To Do</h2>
+            <div class="task" id="todo-task"></div>
+            <input 
+            type="text" 
+            class="task-input" 
+            id="todo-task"
+            placeholder="Add a task"
+            />
+            <button class="add-task">Add Task</button>
+            
+        </div>
+        <!-- inprogress -->
+        <div class="coloum" id="doing">
+            <h2>Doing</h2>
+            <div class="task" id="doing-task"></div>
+            <input 
+            type="text" 
+            class="doing-input" 
+            id="doing-task"
+            placeholder="Add a task"
+            />
+            <button class="add-task">Add Task</button>
+            
+        </div>
+        <!-- done -->
+        <div class="coloum" id="done">
+            <h2>Done</h2>
+            <div class="task" id="done-task"></div>
+            <input 
+            type="text" 
+            class="done-input" 
+            placeholder="Add a task"
+            />
+            <button class="add-task">Add Task</button>
+            
+        </div>
+        
+
+    </div>
+    
+</body>
+</html>
