@@ -18,7 +18,7 @@
             id="todo-task"
             placeholder="Add a task"
             />
-            <button class="add-task">Add Task</button>
+            <button class="add-task" onclick="addTask('todo')" >Add Task</button>
             
         </div>
         <!-- inprogress -->
@@ -27,11 +27,11 @@
             <div class="task" id="doing-task"></div>
             <input 
             type="text" 
-            class="doing-input" 
+            class="doing-input task-input" 
             id="doing-task"
             placeholder="Add a task"
             />
-            <button class="add-task">Add Task</button>
+            <button class="add-task" onclick="addTask('doing')">Add Task</button>
             
         </div>
         <!-- done -->
@@ -40,15 +40,15 @@
             <div class="task" id="done-task"></div>
             <input 
             type="text" 
-            class="done-input" 
+            class="done-input task-input" 
             placeholder="Add a task"
             />
-            <button class="add-task">Add Task</button>
+            <button class="add-task" onclick="addTask('done')">Add Task</button>
             
         </div>
         
 
     </div>
-    
+    <script src="script.js"></script>
 </body>
 </html>
