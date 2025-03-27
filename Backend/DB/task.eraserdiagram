@@ -1,0 +1,34 @@
+entity-relationship-diagram
+
+// define tables
+user [icon: user]{
+  id string pk
+  username string
+  email string unique
+  password string
+  ph_number string
+}
+
+note[icon:clipboard]{
+  id string pk
+  title string
+  color string
+  created_by_user_id string
+}
+
+sub_notes[ icon: clipboard]{
+  id string pk
+  title string
+  content string
+  note_id string
+  created_by_user  string
+}
+
+
+// End of tables
+
+// Relationships
+note.created_by_user_id > user.id
+sub_notes.note_id > note.id
+sub_notes.created_by_user > user.id
+

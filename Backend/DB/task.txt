@@ -1,0 +1,25 @@
+Task
+
+user
+id (primary key pk)
+email
+password
+username
+ph_number
+
+note
+id
+name 
+title
+color
+created_by_user_id
+
+
+sub_note
+id
+note_id (Parent ID)
+title
+desc
+completed : Boolen
+content
+created_by_user_id
