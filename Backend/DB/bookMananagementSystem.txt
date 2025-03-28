@@ -1,0 +1,64 @@
+ Book Management system
+
+ Tables
+ - Users
+    - id 
+    - name
+    - phone number
+    - role : ADMIN OR USER
+ - Books
+    - id
+    - name
+    - ISBN_NUMBER
+    - price
+    - author
+
+ - Author
+    - id
+    - name
+    - instagram
+    - tiktok
+    - List[ Books]
+
+ - Admin
+    
+ - BookRecords
+    - id
+    - book ID
+    - user ID
+    - Issue Time
+    - return time
+    - Is Returened
+
+
+### Teachyst (Next gen LMS)
+Heads Up : White Lablled 
+
+
+Tables 
+ - Users
+ - Courses 
+ - Lessons
+ - Enrollment
+ - Transaction
+    - ID 
+    - User ID
+    - Course ID
+    - Payment gatway
+    - Amount
+    - Date
+ - Coupon
+    - Code
+    - Discount Type
+    - Exp Time
+    - Start Date
+ - Category
+ 
+
+ # Need to Do 
+ - Libray management system
+ - parking lots system
+ - Learnyst
+ - amazon (Multiples seller and buyers and warehouse)
+
+
