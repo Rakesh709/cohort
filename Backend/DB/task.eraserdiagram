@@ -3,10 +3,48 @@ entity-relationship-diagram
 // define tables
 user [icon: user]{
   id string pk
+  avatar string
   username string
   email string unique
+  fullname string
   password string
+  isEmialVerified Boolean
+  refreshToken string
+  forgotPasswordToken string
+  forgotPasswordExpiry DATETIME
+  EMAILvERIFICATIONtOKEN string
+  emailVerificationExpiray DATETIME
   ph_number string
+}
+
+Project[icon:check]{
+  name string
+  description string
+  createdBy string
+  createdAt string
+}
+
+ProjectMember[icon:settings]{
+  user string
+  project string
+  role ENUM
+}
+
+Task[ icon:copy]{
+  title string
+  description string
+  project string
+  assignedTo string
+  assignedBy string
+  Status ENUM
+  attachments string[]
+}
+
+ProjectNoteSchema[icon:twitter]{
+  createdBy 
+  project string
+  createdBy string
+  content string
 }
 
 note[icon:clipboard]{
@@ -25,10 +63,13 @@ sub_notes[ icon: clipboard]{
 }
 
 
+
+
 // End of tables
 
 // Relationships
 note.created_by_user_id > user.id
 sub_notes.note_id > note.id
 sub_notes.created_by_user > user.id
+Project.createdBy > user.id
 
