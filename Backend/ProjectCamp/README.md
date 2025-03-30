@@ -91,5 +91,91 @@
     dotenv.config({
         path:"./.env"
     })
+
+    const PORT = process.env.PORT || 8000;
     //awlays give the path becaouse verbose code is always good
     ```
+
+    ``` env
+        PORT = 8000
+    ```
+9. Connect to MongooDB
+    - In db --> index.js
+
+    ```javascript
+    import mongoose from "mongoose"
+
+    const connectDB = async ()=>{
+    try {
+        await mongoose.connect(process.env.MONGO_URI)
+        console.log("MongoDB Connected")
+    } catch (error) {
+        console.log("MongoDB Connection failed",error);
+        process.exit(1);
+        //if the project run without db then fine else need to debug
+    }
+    }
+
+    export default connectDB;
+    ```
+
+10 . Error standards
+    - In utility -->api-error.js
+
+    ```javascript
+            
+    class ApiError extends Error{
+        constructor(
+            statusCode,
+            message = "Something went wrong",
+            error =[],
+            stack=""
+        )   {
+            super(message);
+            //ATLEST MSG IS REQUIRED
+            this.statusCode = statusCode;
+            this.message= message;
+            this.succss = false;
+            this.error = error;
+            
+        }
+    }
+
+        export {ApiError}
+    ```
+
+- In utility -->api-response.js
+
+    ```
+    class ApiResponse{
+        constructor(statusCode, data, message="Success"){
+        this.statusCode= statusCode;
+        this.data= data;
+        this.message = message;
+        this.success = statusCode<400;
+        }
+    }
+
+        export {ApiResponse}
+    ```
+
+- In utility -->constant.js
+    ```
+    export const UserRolesEnum ={
+    ADMIN:"admin",
+    PROJECT_ADMIN:"project_admin",
+    MEMBER: "member",
+    }
+
+    export const AvailableUserRoles = Object.values(UserRolesEnum)
+
+    export const TaskStatusEnum ={
+    TODO:"todo",
+    IN_PROGRESS:"in_progress",
+    DONE:"done",
+    }
+
+    export const AvaibaleTaskStatus = Object.values(TaskStatusEnum)
+
+    ```
+
