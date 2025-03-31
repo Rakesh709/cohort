@@ -186,3 +186,5 @@
 
 - touch user.models.js task.models.js subtask.models.js project.models.js note.models.js 
 
+12. npm i bcryptjs jsonwebtoken
+   - mongoose hook 
