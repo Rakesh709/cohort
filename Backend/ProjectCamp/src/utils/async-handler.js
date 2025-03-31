@@ -8,3 +8,5 @@ const asyncHandler = (requestHandler)=>{
 }
 
 export {asyncHandler}
+
+//this save try catch haar jagh nhi lagan hota hai 
