@@ -188,3 +188,8 @@
 
 12. npm i bcryptjs jsonwebtoken
    - mongoose hook 
+
+13. touch healthcheck.controller.js auth.controller.js note.controller.js project.controller.js task.controller.js
+
+14. $ touch healthcheck.routes.js auth.routes.js note.routes.js project.routes.js task.routes.js
+

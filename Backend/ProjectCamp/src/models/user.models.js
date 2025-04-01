@@ -128,3 +128,5 @@ export const User = mongoose.model("User",userSchema)
 
 
 //https://placehold.co/
+
+//methods from mongodb 
