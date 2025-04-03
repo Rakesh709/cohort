@@ -39,7 +39,7 @@
    "type": "module",
    //TYPE NEED TO ADD 
    "scripts": {
-   "start": "node index.js"
+   "start": "node src/index.js"
    },
    "keywords": [],
    "author": "",
