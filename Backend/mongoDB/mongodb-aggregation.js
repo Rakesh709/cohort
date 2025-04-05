@@ -48,3 +48,54 @@
     $limit: 5
   }
 ]
+
+//find the total numberr of male and femal 
+
+[
+  {
+    $group: {
+      _id: "$gender",
+      genderCount:{
+        $sum: 1
+      }
+      
+    }
+  }
+]
+
+//which country has the higest number of users ?
+
+[
+  {
+    $group: {
+      _id: "$company.location.country",
+      userCount:{
+        $sum:+1
+      }
+    }
+  },
+    {
+      $sort: {
+        userCount: -1
+      }
+    },
+  {
+    $limit: 2
+  }
+    
+  
+]
+
+// list all unique eye colors in collection 
+
+[
+  {
+    $group: {
+      _id: "$eyeColor",
+      eyeColourCount:{
+        $sum:1
+      }
+    },
+  }
+]
+
