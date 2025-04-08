@@ -120,3 +120,17 @@
   }
 ]
 
+//how many users have enum as one of their tags
+
+[
+  {
+    $match: {
+      tags: "enim"
+    }
+  },
+  {
+    $count: 'userWithEnimTags'
+  }
+]
+
+// what are the names and age of users swho are inactive and have velit as a tag?
