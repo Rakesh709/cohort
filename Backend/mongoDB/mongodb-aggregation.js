@@ -134,3 +134,52 @@
 ]
 
 // what are the names and age of users swho are inactive and have velit as a tag?
+
+[
+  {
+    $match: {
+      isActive: false, 
+      tags: "velit",
+      
+    },
+  },
+  {
+    $project: {
+      name:1,
+      age:1
+    }
+  }
+]
+
+//how many user have phone number with +1 (940)
+
+[
+  {
+    $match: {
+      "company.phone":/^\+1 \(940\)/
+    }
+  },
+  {
+    $count: "usersWithNumber"
+  }
+]
+
+//who has registred the most recently 
+[
+  {
+    $sort: {
+      registered: -1
+    }
+  },{
+    $limit: 5
+  },
+  {
+    $project: {
+      name:1,
+      registred:1,
+      favoriteFruit:1
+    }
+  }
+]
+
+//categories user by there favorite fruit
