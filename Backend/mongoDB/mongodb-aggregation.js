@@ -169,6 +169,7 @@
   {
     $sort: {
       registered: -1
+      // this means user regitsrted at last will come first
     }
   },{
     $limit: 5
@@ -183,3 +184,53 @@
 ]
 
 //categories user by there favorite fruit
+
+[
+  {
+    $group: {
+      _id: "$favoriteFruit",
+      users:{
+        $push:"$name"
+      }
+    }
+  }
+]
+//push is accumulater like avg 
+
+//how many users have "ad" as the secondary tag in there list of tags
+
+[
+  {
+    $match: {
+      "tags.1":"ad"
+    }
+  },{
+    $count: 'secondTagAd'
+  }
+]
+
+//find user who have both "enim and is as their tags"
+[
+  {
+    $match: {
+      tags:{
+        $all:["enim","id"]
+      }
+    }
+  }
+]
+
+// list all the companies located in the USA with thier corrsponding user count
+[
+  {
+    $match: {
+      "company.location.country":"USA"
+    }
+  },
+  {
+    $group: {
+      _id: "$company.title",
+      userCount:{ $sum:1}
+    }
+  }
+]
