@@ -234,3 +234,43 @@
     }
   }
 ]
+
+//how to connect 2 colcetions
+
+[
+  {
+    $lookup: {
+      from: 'authors',
+      localField: 'author_id',
+      foreignField: '_id',
+      as: "authors_details"
+    }
+  },
+  {
+  	$addFields: {
+  	  author_details:{
+        $arrayElemAt:['authors_details',0]
+      }
+  	}
+  }
+]
+
+
+//wrong one
+[
+  {
+    $lookup: {
+      from: "authors",
+      localField: "author_id",
+      foreignField: "_id",
+      as: "author_details"
+    }
+  },
+  {
+    $addFields: {
+      author_details: {
+        $arrayElemAt:["$author_details",0]
+      }
+    }
+  }
+]
