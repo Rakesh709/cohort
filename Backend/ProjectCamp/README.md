@@ -194,12 +194,18 @@
 14. $ touch healthcheck.routes.js auth.routes.js note.routes.js project.routes.js task.routes.js
 
  14.1 AsyncHandler.js
+      [[...Error handling ya to trycatch sai hoti ya fir promise sai ]]
 
 15. Validator.js 
 
 16. validator.middleware.js
 
 ### Till here boiler code Done 
+
+###part 2
+
+13.1 Auth Controller
+        
 
 
 
