@@ -205,7 +205,7 @@
 ###part 2
 
 13.1 Auth Controller
-        
+        15.1 to validate : validators-->index.js [[...express validator]]
 
 
 
