@@ -206,6 +206,8 @@
 
 13.1 Auth Controller
         15.1 to validate : validators-->index.js [[...express validator]]
+        - 3 place we need to make it work : validator --> middleware->routes 
+        [same in zod]
 
 
 

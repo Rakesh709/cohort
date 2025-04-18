@@ -19,6 +19,7 @@ const userRegistrationValidator = ()=>{
         
         body("role")
             .notEmpty().withMessage("Default role is user")
+            
     ]
 }
 
