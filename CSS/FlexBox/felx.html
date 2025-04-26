@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexBox</title>
+    <style>
+        .parent{
+            border: 1px solid black;
+            border-radius: 2px;
+        }
+        .top-line{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+
+        }
+        .top-line div{
+            /* border: 0.5px solid black; */
+            border: 0.5px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .industry{
+            display: flex;
+            flex: 3;
+        }
+
+        .top-2-line{
+            border: 0.5px solid black;
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            flex-direction: column;
+        }
+
+        .last-line{
+           
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .last-line div{
+            border: 0.5px solid black;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="top-line">
+            <div>⚡</div>
+            <div id="industry">20%</div>
+            <div>30%</div>
+            <div >Industry-leading performance per watt</div>
+            <div>96Gb</div>
+        </div>
+
+        <div class="top-2-line">
+            <div>Over 16 Billion Transisters</div>
+            
+        </div>
+
+
+        <div class="last-line">
+            <div>⚡</div>
+            <div>20%</div>
+            <div>30%</div>
+            <div>Industry-leading performance per watt</div>
+            <div>96Gb</div>
+        </div>
+    </div>
+</body>
+</html>
