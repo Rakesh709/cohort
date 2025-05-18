@@ -32,3 +32,49 @@ nav div button:hover{
     background-color: blue;
     color: #ffff;
 }
+
+/* hero section started  */
+.hero{
+    display: flex;
+    border: 1px dashed black;
+    justify-content: space-between;
+    background-color: #1f2937;
+    color: #ffff;
+    align-items: center;
+    padding: 40px 80px;
+    
+}
+
+.left-side{
+    width: 50%;
+}
+
+.right-side{
+    width: 50%;
+}
+
+.left-side h1{
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.left-side p{
+    font-size: 1.2rem;
+    color: #989595;
+    margin-bottom: 2rem;
+}
+
+.left-side button{
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.left-side button:hover{
+    background-color: #1f2937;
+    color: #ffff;
+    border: none;
+    border: 1px solid #ffff;
+    
+}
